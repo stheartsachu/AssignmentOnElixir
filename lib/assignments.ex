@@ -1,7 +1,12 @@
 defmodule Assignments do
   @moduledoc """
-  Documentation for `Assignments`.
+  Documentation for `Assignments`.\n
+  Assignments.super_digit(Number as argument) -> returns super digit of (number)
+  Assignments.mingle_main(stringOne,stringTwo) -> returns mingle string of two inputed String
+  Assignments.swap_the_positions(inputed string) -> returns swaped position string
+  Assignments.check_bracket(inputed String) -> returns true or false , wheather have complete pair of digits or not
   """
+
   ######################## (Assignment - I) ######################################
   @spec super_digit(any, non_neg_integer) :: integer
   def super_digit(num, k) do
@@ -117,9 +122,13 @@ defmodule Assignments do
 
   ########################### (Assignment-IV)###################################
 
-  def check_brackets(str) do
+  # Firstly below mention function is main function.
+  # This function is of arity/1 which split string into list and call check_bracket functions
+  def check_bracket(str) do
     check_brackets(String.codepoints(str), [])
   end
+
+  # [elements of string ],[]
 
   def check_brackets(["[" | chars_list], stack) do
     check_brackets(chars_list, ["]" | stack])
@@ -142,10 +151,12 @@ defmodule Assignments do
     check_brackets(chars_list, stack)
   end
 
+  # if our stack and out mate list i.e., chars_list is empty then return true
   def check_brackets([], []) do
     true
   end
 
+  # This is basically the else case for above condtion
   def check_brackets(_, _) do
     false
   end
