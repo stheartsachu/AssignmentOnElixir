@@ -121,24 +121,25 @@ defmodule Assignments do
     check_brackets(String.codepoints(str), [])
   end
 
-  def check_brackets(["[" | chars], stack) do
-    check_brackets(chars, ["]" | stack])
+  def check_brackets(["[" | chars_list], stack) do
+    check_brackets(chars_list, ["]" | stack])
   end
 
-  def check_brackets(["{" | chars], stack) do
-    check_brackets(chars, ["}" | stack])
+  def check_brackets(["{" | chars_list], stack) do
+    check_brackets(chars_list, ["}" | stack])
   end
 
-  def check_brackets(["(" | chars], stack) do
-    check_brackets(chars, [")" | stack])
+  def check_brackets(["(" | chars_list], stack) do
+    check_brackets(chars_list, [")" | stack])
   end
 
-  def check_brackets([next | chars], [top | stack]) when next === top do
-    check_brackets(chars, stack)
+  def check_brackets([next | chars_list], [top | stack]) when next === top do
+    check_brackets(chars_list, stack)
   end
 
-  def check_brackets([next | chars], stack) when next not in ["[", "{", "(", ")", "}", "]"] do
-    check_brackets(chars, stack)
+  def check_brackets([next | chars_list], stack)
+      when next not in ["[", "{", "(", ")", "}", "]"] do
+    check_brackets(chars_list, stack)
   end
 
   def check_brackets([], []) do
