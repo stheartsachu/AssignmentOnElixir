@@ -15,6 +15,6 @@ defmodule AssignmentsTest do
   end
 
   test "Assignment 4 : check the brackets and return true or false" do
-    assert Assignments.check_bracket("[{()}]") == true
+    assert Assignments.check_input_bracket("[{()}]") == true
   end
 end

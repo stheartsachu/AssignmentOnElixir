@@ -13,9 +13,6 @@ defmodule Assignments do
   1st argument is the number whose super digit is to find
   2nd argument is the times_multiply number
   ex -> 9456*2 = 94569456
-  ## Examples
-        iex>super_digit(148, 3)
-        iex>3
   """
   @spec super_digit(any, non_neg_integer) :: integer
   def super_digit(num, k) do
@@ -36,9 +33,6 @@ defmodule Assignments do
   super_digit is funntion takes one arguments
   argument : Numbers
 
-  ## Examples
-        iex>super_digit_maker(9875)
-        iex>2
   """
   @spec super_digit_maker(integer) :: integer
   def super_digit_maker(num) do
@@ -69,9 +63,9 @@ defmodule Assignments do
   1st argument is the input string
   2nd argument is also a inputed string
   Task : we have to create mingle string using given strings
-  ## Examples
-        iex>mingle_main("abcd", "1234")
-        iex>"a1b2c3d4"
+  Examples
+  mingle_main("abcd", "1234")
+  "a1b2c3d4"
   """
   def mingle_main(input1, input2) do
     # If the both given strings contains only One charcter then interchage the postion to create mingle
@@ -103,9 +97,9 @@ defmodule Assignments do
         length of string(3rd argument) i.e, 3 here
 
   Task : we have to create mingle string using given strings
-  ## Examples
-        iex>mingle_maker_for_equal_ln("abc", "123", 3)
-        iex>"a1b2c3"
+  Examples
+  mingle_maker_for_equal_ln("abc", "123", 3)
+  "a1b2c3"
   """
   def mingle_maker_for_equal_ln(input_one, input_two, idx) do
     for i <- 0..(idx - 1) do
@@ -125,9 +119,9 @@ defmodule Assignments do
         string_two = "123"
         Here original length will be three because shorter string have length of 3
 
-  ## Examples
-        iex>mingle_maker_for_equal_ln("abc", "123", 3)
-        iex>"a1b2c3"
+  Examples
+  mingle_maker_for_equal_ln("abc", "123", 3)
+  "a1b2c3"
   """
   def mingle_maker_for_unequal_ln(input1, input2) do
     {org_len_for_mingle, first_input_is_greater} = check_len(input1, input2)
@@ -162,9 +156,9 @@ defmodule Assignments do
   check_len(input1, input2)
   1st argument : 1st given string
   2nd argument : 2nd given string
-  ## Examples
-        iex>check_len("1243", "abc")
-        iex>{4,true}
+  Examples
+  check_len("1243", "abc")
+  {4,true}
   """
 
   def check_len(input1, input2) do
@@ -221,44 +215,69 @@ defmodule Assignments do
   ############################### (END)#############################
 
   ########################### (Assignment-IV)###################################
+  @doc """
+    check_input_bracket(bracket_string))
+    and returns true or false
+  """
 
-  # Firstly below mention function is main function.
-  # This function is of arity/1 which split string into list and call check_bracket functions
-  def check_bracket(str) do
-    check_brackets(String.codepoints(str), [])
+  # Below mention function is the first fall fucntion
+  # takes input string and split it into list of string
+  def check_input_bracket(bracket_string) do
+    String.codepoints(bracket_string) |> check_input_bracket([])
   end
 
-  # [elements of string ],[]
+  # This the termination condition for recusion
+  # we insert element in stack and pop out
+  # In this case stack operation are performed at the head of the list
+  def check_input_bracket([], []), do: true
+  # If stack contain some value,element it means some bracket wont be poped out
+  def check_input_bracket([], _stack), do: false
 
-  def check_brackets(["[" | chars_list], stack) do
-    check_brackets(chars_list, ["]" | stack])
+  # below mentioned fucntion take two list
+  # first is the list of the brackets
+  # Second is the stack
+
+  # take head from the list of brackets then inser at the head of the stack
+  # pass tail for further iterations
+  def check_input_bracket([head | tail], stack) when head in ["{", "[", "("] do
+    check_input_bracket(tail, [head | stack])
   end
 
-  def check_brackets(["{" | chars_list], stack) do
-    check_brackets(chars_list, ["}" | stack])
+  # Here pass tail for further iterations and updated value of stack
+
+  # below mention function , while iterating sometime we encounter closing pranthesis before opening bracket
+  # So, it raise an error to avoid it we have used this fucntionality
+  def check_input_bracket([head | _], []) when head in ["}", "]", ")"],
+    do: false
+
+  # here we are only check head of the list is closing bracket then
+
+  # "}" pattern matched function
+  def check_input_bracket(["}" | tail], stack) do
+    if hd(stack) == "{" do
+      check_input_bracket(tail, tl(stack))
+    else
+      false
+    end
   end
 
-  def check_brackets(["(" | chars_list], stack) do
-    check_brackets(chars_list, [")" | stack])
+  # "]" pattern matched function
+
+  def check_input_bracket(["]" | tail], stack) do
+    if hd(stack) == "[" do
+      check_input_bracket(tail, tl(stack))
+    else
+      false
+    end
   end
 
-  def check_brackets([next | chars_list], [top | stack]) when next === top do
-    check_brackets(chars_list, stack)
-  end
-
-  def check_brackets([next | chars_list], stack)
-      when next not in ["[", "{", "(", ")", "}", "]"] do
-    check_brackets(chars_list, stack)
-  end
-
-  # if our stack and out mate list i.e., chars_list is empty then return true
-  def check_brackets([], []) do
-    true
-  end
-
-  # This is basically the else case for above condtion
-  def check_brackets(_, _) do
-    false
+  # ")" pattern matched function
+  def check_input_bracket([")" | tail], stack) do
+    if hd(stack) == "(" do
+      check_input_bracket(tail, tl(stack))
+    else
+      false
+    end
   end
 
   ################################ (END)#############################
